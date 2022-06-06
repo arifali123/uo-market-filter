@@ -1,19 +1,23 @@
-import { useState } from "react"
+import { useStorage } from "@plasmohq/storage"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
+  const [data, setData] = useStorage<boolean>("hide", true)
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        padding: 16
+        flexDirection: "row",
+        padding: 5,
+        width: "100px"
       }}>
-      <h1>
-        Welcome to your <a href="https://www.plasmo.com">Text</a> Extension!
-      </h1>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
+      <input
+        checked={data}
+        type="checkbox"
+        onChange={async () => {
+          setData(!data)
+        }}
+      />
+      <div>Hide UO MRKT Items</div>
     </div>
   )
 }

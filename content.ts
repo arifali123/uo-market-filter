@@ -8,13 +8,30 @@ export const config: PlasmoContentScript = {
 if (document.readyState) {
   // go to https://www.urbanoutfitters.com/mens-shoes
   // selects all the items and filters out the ones that are UO MRKT
-  const items = document.querySelectorAll('div[class="c-pwa-tile-grid-inner"]')
-  //   console.log(items)
-  console.log(items)
-  for (const item of items) {
-    if (item.textContent.includes("UO MRKT")) {
-      console.log(item)
-      // item.remove() when I can get filtering working
+  const grid = document.querySelector(
+    'div[class="c-pwa-tile-grid s-pwa-tile-grid"]'
+  )
+  const observer = new MutationObserver((mlist) => {
+    for (const mutation of mlist) {
+      if (
+        mutation.type === "attributes" &&
+        mutation.target.nodeName === "P" &&
+        mutation.attributeName === "class" &&
+        (mutation.target as HTMLParagraphElement).className.includes(
+          "c-pwa-product-text-badge"
+        ) &&
+        (mutation.target as HTMLParagraphElement).innerText.includes("UO MRKT")
+      ) {
+        const toremove =
+          mutation.target.parentElement.parentElement.parentElement
+        const name = (
+          toremove.firstElementChild.firstElementChild.firstElementChild
+            .children[1] as HTMLParagraphElement
+        ).innerText
+        grid.removeChild(toremove)
+        console.log(`Removed ${name}`)
+      }
     }
-  }
+  })
+  observer.observe(grid, { childList: true, attributes: true, subtree: true })
 }
