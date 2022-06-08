@@ -1,7 +1,20 @@
 import { useStorage } from "@plasmohq/storage"
 
 function IndexPopup() {
-  const [data, setData] = useStorage<boolean>("hide", true)
+  const [hide, setHide] = useStorage<boolean>("hide", true)
+
+  const toggle = () => {
+    const newData = !hide
+    setHide(newData)
+    chrome.tabs.query({ url: "https://www.urbanoutfitters.com/*" }, (tabs) => {
+      tabs.forEach((tab) => {
+        if (!tab.id) return
+        chrome.tabs.sendMessage(tab.id, { type: "hide", data: newData })
+        console.log("Notified", tab.id)
+      })
+    })
+  }
+
   return (
     <div
       style={{
@@ -10,13 +23,7 @@ function IndexPopup() {
         padding: 5,
         width: "100px"
       }}>
-      <input
-        checked={data}
-        type="checkbox"
-        onChange={async () => {
-          setData(!data)
-        }}
-      />
+      <input checked={hide} type="checkbox" onChange={toggle} />
       <div>Hide UO MRKT Items</div>
     </div>
   )
