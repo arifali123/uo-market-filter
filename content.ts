@@ -31,7 +31,7 @@ const remove = (productElement: HTMLElement) => {
   productElement.remove()
 }
 
-const removeInitial = () => {
+const removeAll = () => {
   const products = document.querySelectorAll(
     "p[class='c-pwa-product-text-badge']"
   )
@@ -45,19 +45,20 @@ const removeInitial = () => {
 const observer = new MutationObserver((mutations) => {
   if (!state) return
 
-  mutations.forEach((mutation) => {
+  for (const mutation of mutations) {
     const target = mutation.target
     if (
       target instanceof HTMLParagraphElement &&
       target.className == "c-pwa-product-text-badge" &&
       target.innerText == "UO MRKT"
     ) {
-      remove(getProductFromBadge(target))
+      removeAll()
+      return
     }
-  })
+  }
 })
 
-removeInitial()
+removeAll()
 observer.observe(document.body, {
   childList: true,
   attributes: true,
