@@ -32,6 +32,7 @@ const remove = (productElement: HTMLElement) => {
 }
 
 const removeAll = () => {
+  if (!state) return
   const products = document.querySelectorAll(
     "p[class='c-pwa-product-text-badge']"
   )
