@@ -17,14 +17,18 @@ function IndexPopup() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        padding: 5,
-        width: "100px"
-      }}>
-      <input checked={hide} type="checkbox" onChange={toggle} />
-      <div>Hide UO MRKT Items</div>
+      style={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: 5,
+          width: "160px"
+        }}>
+        <input checked={hide} type="checkbox" onChange={toggle} />
+        <div>Hide UO MRKT Items</div>
+      </div>
+      <div>Refresh After Toggle</div>
     </div>
   )
 }

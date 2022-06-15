@@ -37,7 +37,7 @@ const removeAll = () => {
     "p[class='c-pwa-product-text-badge']"
   )
   products.forEach((product: HTMLParagraphElement) => {
-    if (product.innerText == "UO MRKT") {
+    if (product.innerText.includes("UO MRKT")) {
       remove(getProductFromBadge(product))
     }
   })
@@ -50,8 +50,8 @@ const observer = new MutationObserver((mutations) => {
     const target = mutation.target
     if (
       target instanceof HTMLParagraphElement &&
-      target.className == "c-pwa-product-text-badge" &&
-      target.innerText == "UO MRKT"
+      target.className.includes("c-pwa-product-text-badge") &&
+      target.innerText.includes("UO MRKT")
     ) {
       removeAll()
       return
