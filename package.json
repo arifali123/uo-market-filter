@@ -1,7 +1,7 @@
 {
   "name": "mrkt-hide",
   "displayName": "UO MRKT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Hide Urban Outfitters MRKT Items",
   "author": "arifali",
   "packageManager": "pnpm@6.32.6",
